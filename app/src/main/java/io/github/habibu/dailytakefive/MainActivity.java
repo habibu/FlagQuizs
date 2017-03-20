@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -21,28 +22,36 @@ public class MainActivity extends AppCompatActivity {
     private SharedPreferences saveNotes;
     public static final String MY_PREF_FILE = "saveFile";
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        try {
         /*
         * Setting icon with the actionBar
         * */
-        getSupportActionBar().setDisplayUseLogoEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(R.drawable.dailytake_5);
 
 
-        setContentView(R.layout.activity_main);
-        noteList = (TextView) findViewById(R.id.notes_text);
-        saveNotes = getSharedPreferences(MY_PREF_FILE, Context.MODE_APPEND);
-        noteList.setText(saveNotes.getString("saveNote", notes));
+            getSupportActionBar().setDisplayUseLogoEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setIcon(R.drawable.dailytake_5);
+
+            /*main contents*/
+            setContentView(R.layout.activity_main);
+
+            noteList = (TextView) findViewById(R.id.notes_text);
+            saveNotes = getSharedPreferences(MY_PREF_FILE, Context.MODE_APPEND);
+            noteList.setText(saveNotes.getString("saveNote", notes));
         /*
         saveNotes = getSharedPreferences("notes", MODE_APPEND);
         //noteList.setText(saveNotes.getString("saveNote", "List of Daily Notes" + "\n"));
         noteList.setText(saveNotes.getString("saveNote", notes));
         saveNotes = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         */
+        } catch (Exception e) {
+            Log.e("ERROR", "ERROR FOUND AT:" + e.toString());
+            e.printStackTrace();
+        }
     }
 
     /*
